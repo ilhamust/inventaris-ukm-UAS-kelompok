@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KategoriController;
 
 Route::get('/', function () {
     return view('/auth/login');
@@ -17,9 +18,8 @@ Route::get('/barang', function () {
     return "Halaman Barang";
 });
 
-Route::get('/kategori', function () {
-    return "Halaman Kategori";
-});
+Route::resource('/kategori', KategoriController::class);
+
 
 Route::get('/transaksi', function () {
     return "Halaman Transaksi";

@@ -15,7 +15,7 @@
     <div class="d-flex">
         <!-- Sidebar -->
         <nav class="bg-white text-dark shadow-sm min-vh-100 p-3" style="width: 250px;">
-            <h4 class="mb-4">Material Admin</h4>
+            <h4 class="mb-4">Dashboard Admin</h4>
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item mb-1">
                     <a href="{{ url('/dashboard') }}" class="nav-link text-dark {{ request()->is('dashboard') ? 'active bg-light' : '' }}">

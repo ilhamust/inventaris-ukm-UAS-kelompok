@@ -55,6 +55,10 @@
                                     <!-- Login Button -->
                                     <button type="submit" class="btn btn-primary w-100">Login</button>
                                 </form>
+                                <!-- Forget Password Link -->
+                                <div class="text-center mt-3">
+                                    <a href="{{ route('password.request') }}" class="text-decoration-none">Lupa Kata Sandi?</a>
+                                </div>
                             </div>
                         </div>
                     </div>

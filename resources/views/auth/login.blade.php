@@ -1,43 +1,72 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Login - Inventaris UKM</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="card p-5 shadow-sm" style="max-width: 400px; width: 100%;">
-        <h1 class="text-center text-primary mb-4">Inventaris Barang</h1>
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-            <input id="name" type="text" class="form-control mb-3 @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Username">
-            @error('name')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-            <input id="password" type="password" class="form-control mb-3 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
-            @error('password')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                <label class="form-check-label" for="remember">
-                    {{ __('Remember Me') }}
-                </label>
+
+<body class="bg-white bg-gradient">
+
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center align-items-center vh-100">
+
+            <div class="col-xl-8 col-lg-10 col-md-10">
+                <div class="card border-0 shadow-lg">
+                    <div class="row g-0">
+                        <!-- Left Section -->
+                        <div class="col-lg-6 bg-light p-5 d-flex flex-column justify-content-center">
+                            <p class="mb-2">Selamat Datang di,</p>
+                            <h3 class="mb-3">Inventaris UKM</h3>
+                            <p>Manajemen inventarismu lebih mudah!</p>
+                        </div>
+
+                        <!-- Right Section -->
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Login</h1>
+                                </div>
+                                <form method="POST" action="{{ route('login') }}">
+                                    @csrf
+                                    <!-- Username -->
+                                    <div class="mb-3">
+                                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                            placeholder="Username" required autofocus value="{{ old('name') }}">
+                                        @error('name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <!-- Password -->
+                                    <div class="mb-3">
+                                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                                            placeholder="Password" required>
+                                        @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <!-- Login Button -->
+                                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary w-100">
-                {{ __('Login') }}
-            </button>
-            @if (Route::has('password.request'))
-                <a class="btn btn-link" href="{{ route('password.request') }}">
-                    {{ __('Forgot Your Password?') }}
-                </a>
-            @endif
-        </form>
+
+        </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

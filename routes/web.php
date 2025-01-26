@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\BarangController;
 
 Route::get('/', function () {
     return view('/auth/login');
@@ -14,12 +15,9 @@ Route::get('/dashboard', function () {
     return view('home');
 })->name('dashboard');
 
-Route::get('/barang', function () {
-    return "Halaman Barang";
-});
-
 Route::resource('/kategori', KategoriController::class);
 
+Route::resource('/barang', BarangController::class);
 
 Route::get('/transaksi', function () {
     return "Halaman Transaksi";

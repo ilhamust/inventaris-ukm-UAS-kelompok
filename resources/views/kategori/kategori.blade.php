@@ -43,7 +43,15 @@
                                     <td>{{ $loop->iteration + ($categories->currentPage() - 1) * $categories->perPage() }}</td>
                                     <td>{{ $category->nama_kategori }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('kategori.edit', $category->id) }}" class="btn btn-sm btn-warning me-1">Edit</a>
+                                        <!-- Tombol Edit -->
+                                        <button class="btn btn-sm btn-warning me-1" data-bs-toggle="modal" 
+                                            data-bs-target="#editCategoryModal"
+                                            data-id="{{ $category->id }}"
+                                            data-name="{{ $category->nama_kategori }}">
+                                            Edit
+                                        </button>
+                        
+                                        <!-- Tombol Hapus -->
                                         <form action="{{ route('kategori.destroy', $category->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
@@ -56,7 +64,7 @@
                                     <td colspan="3" class="text-center">Tidak ada kategori ditemukan.</td>
                                 </tr>
                             @endforelse
-                        </tbody>
+                            </tbody>                        
                     </table>
                 </div>
             </div>
@@ -96,4 +104,55 @@
         </div>
     </div>
 </div>
+<!-- Modal Edit Kategori -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCategoryModalLabel">Edit Kategori</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editCategoryForm" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit_nama_kategori" class="form-label">Nama Kategori</label>
+                        <input type="text" name="nama_kategori" id="edit_nama_kategori" class="form-control @error('nama_kategori') is-invalid @enderror" placeholder="Masukkan nama kategori" required>
+                        @error('nama_kategori')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    const editCategoryModal = document.getElementById('editCategoryModal');
+    editCategoryModal.addEventListener('show.bs.modal', function (event) {
+        // Ambil tombol yang memicu modal
+        const button = event.relatedTarget;
+
+        // Ambil data dari tombol
+        const categoryId = button.getAttribute('data-id');
+        const categoryName = button.getAttribute('data-name');
+
+        // Isi form modal dengan data
+        const modalTitle = editCategoryModal.querySelector('.modal-title');
+        const nameInput = editCategoryModal.querySelector('#edit_nama_kategori');
+        const form = editCategoryModal.querySelector('#editCategoryForm');
+
+        modalTitle.textContent = `Edit Kategori: ${categoryName}`;
+        nameInput.value = categoryName;
+
+        // Atur action form ke URL yang sesuai
+        form.action = `/kategori/${categoryId}`;
+    });
+</script>
+
 @endsection

@@ -34,6 +34,27 @@ public function store(Request $request)
     // Redirect ke halaman daftar kategori dengan pesan sukses
     return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan.');
 }
+public function update(Request $request, Kategori $kategori)
+{
+    $request->validate([
+        'nama_kategori' => 'required|string|max:255',
+    ]);
+
+    $kategori->update([
+        'nama_kategori' => $request->input('nama_kategori'),
+    ]);
+
+    return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui.');
+}
+public function destroy(Kategori $kategori)
+{
+    try {
+        $kategori->delete();
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus.');
+    } catch (\Exception $e) {
+        return redirect()->route('kategori.index')->with('error', 'Terjadi kesalahan saat menghapus kategori.');
+    }
+}
 
 
 }

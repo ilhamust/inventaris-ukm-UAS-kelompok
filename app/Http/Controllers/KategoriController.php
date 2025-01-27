@@ -19,4 +19,21 @@ class KategoriController extends Controller
     return view('/kategori/kategori', compact('categories'));
 }
 
+public function store(Request $request)
+{
+    // Validasi input
+    $request->validate([
+        'nama_kategori' => 'required|string|max:255',
+    ]);
+
+    // Simpan kategori ke database
+    Kategori::create([
+        'nama_kategori' => $request->input('nama_kategori'),
+    ]);
+
+    // Redirect ke halaman daftar kategori dengan pesan sukses
+    return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan.');
+}
+
+
 }

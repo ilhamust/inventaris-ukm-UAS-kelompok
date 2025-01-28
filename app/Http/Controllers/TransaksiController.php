@@ -61,5 +61,48 @@ class TransaksiController extends Controller
 
     return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil ditambahkan.');
 }
+public function edit($id)
+{
+    $transaksi = Transaksi::findOrFail($id);
+    $barang = Barang::all(); // Mengambil semua barang untuk pilihan dropdown
+    return view('transaksi.edit', compact('transaksi', 'barang'));
+}
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'barang_id' => 'required|exists:barang,id',
+        'jenis_transaksi' => 'required',
+        'jumlah' => 'required|integer|min:1',
+        'sumber_tujuan' => 'required|string',
+        'tanggal' => 'required|date',
+    ]);
+
+    $transaksi = Transaksi::findOrFail($id);
+    $barang = Barang::findOrFail($request->barang_id);
+
+    // Hitung ulang total harga berdasarkan harga barang
+    $subtotal = $barang->harga * $request->jumlah;
+
+    // Perbarui transaksi
+    $transaksi->update([
+        'barang_id' => $request->barang_id,
+        'jenis_transaksi' => $request->jenis_transaksi,
+        'jumlah' => $request->jumlah,
+        'sumber_tujuan' => $request->sumber_tujuan,
+        'tanggal' => $request->tanggal,
+        'total_harga' => $subtotal,
+    ]);
+
+    return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diperbarui.');
+}
+
+public function destroy($id)
+{
+    $transaksi = Transaksi::findOrFail($id);
+    $transaksi->delete();
+
+    return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dihapus.');
+}
 
 }

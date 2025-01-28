@@ -45,7 +45,7 @@
                                     <td>{{ $loop->iteration + ($laporan->currentPage() - 1) * $laporan->perPage() }}</td>
                                     <td>{{ $item->tanggal }}</td>
                                     <td>{{ $item->kode_transaksi }}</td>
-                                    <td>{{ $item->barang->name }}</td> <!-- Relasi ke barang -->
+                                    <td>{{ $item->barang->nama_barang }}</td> <!-- Relasi ke barang -->
                                     <td>{{ $item->jumlah }}</td>
                                     <td>{{ number_format($item->total_harga, 0, ',', '.') }}</td>
                                 </tr>

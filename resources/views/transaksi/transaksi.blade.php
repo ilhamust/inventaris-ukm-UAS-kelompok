@@ -27,6 +27,8 @@
                                 <th scope="col">Tanggal</th>
                                 <th scope="col">Kode Transaksi</th>
                                 <th scope="col">Nama Barang</th>
+                                <th scope="col">Jenis Transaksi</th> <!-- Tambahan -->
+                                <th scope="col">Sumber/Tujuan</th> <!-- Tambahan -->
                                 <th scope="col">Jumlah</th>
                                 <th scope="col">Total Harga</th>
                                 <th scope="col" class="text-center">Aksi</th>
@@ -38,7 +40,9 @@
                                     <td>{{ $loop->iteration + ($transaksi->currentPage() - 1) * $transaksi->perPage() }}</td>
                                     <td>{{ $item->tanggal }}</td>
                                     <td>{{ $item->kode_transaksi }}</td>
-                                    <td>{{ $item->barang->name }}</td> <!-- Relasi ke barang -->
+                                    <td>{{ $item->barang->nama_barang ?? '-' }}</td>
+                                    <td>{{ $item->jenis_transaksi }}</td> <!-- Tambahan -->
+                                    <td>{{ $item->sumber_tujuan }}</td> <!-- Tambahan -->
                                     <td>{{ $item->jumlah }}</td>
                                     <td>{{ number_format($item->total_harga, 0, ',', '.') }}</td>
                                     <td class="text-center">
@@ -52,10 +56,11 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center">Tidak ada transaksi ditemukan.</td>
+                                    <td colspan="9" class="text-center">Tidak ada transaksi ditemukan.</td>
                                 </tr>
                             @endforelse
                         </tbody>
+                        
                     </table>
                 </div>
             </div>

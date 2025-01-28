@@ -17,5 +17,5 @@ Route::get('/dashboard', function () {
 Route::resource('/kategori', KategoriController::class);
 Route::resource('/barang', BarangController::class);
 Route::resource('/transaksi', TransaksiController::class);
-Route::resource('/laporan', LaporanController::class);
 Route::get('/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
+Route::resource('/laporan', LaporanController::class);

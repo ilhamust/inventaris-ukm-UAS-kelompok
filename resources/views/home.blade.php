@@ -2,25 +2,100 @@
 
 @section('content')
 <div class="container">
+    <h1 class="mb-4">Dashboard</h1>
+
+    @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
+
+    <!-- Row untuk Card Informasi -->
     <div class="row">
-        <div class="col-12">
-            <h1 class="mb-4">Dashboard</h1>
-
-            @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif
-
+        <div class="col-md-3">
             <div class="card shadow-sm border-0">
-                <div class="card-header bg-dark text-white">
-                    {{ __('Welcome') }}
-                </div>
                 <div class="card-body">
-                    <p class="mb-0">{{ __('You are logged in!') }}</p>
+                    <h5 class="card-title">Total Barang</h5>
+                    <p class="fs-4 fw-bold">{{ $totalBarang }}</p>
+                    <i class="bi bi-box-seam fs-1 text-primary"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title">Kategori</h5>
+                    <p class="fs-4 fw-bold">{{ $totalKategori }}</p>
+                    <i class="bi bi-tag-fill fs-1 text-success"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title">Total Transaksi</h5>
+                    <p class="fs-4 fw-bold">{{ $totalTransaksi }}</p>
+                    <i class="bi bi-cash-stack fs-1 text-warning"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row untuk Grafik -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title">Grafik Transaksi</h5>
+                    <canvas id="transaksiChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title">Grafik Stok Barang</h5>
+                    <canvas id="stokChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Data transaksi per bulan
+    var transaksiCtx = document.getElementById('transaksiChart').getContext('2d');
+    var transaksiChart = new Chart(transaksiCtx, {
+        type: 'line',
+        data: {
+            labels: {!! json_encode($bulanTransaksi) !!},
+            datasets: [{
+                label: 'Jumlah Transaksi',
+                data: {!! json_encode($jumlahTransaksi) !!},
+                borderColor: 'rgb(75, 192, 192)',
+                borderWidth: 2,
+                fill: false
+            }]
+        }
+    });
+
+    // Data stok barang
+    var stokCtx = document.getElementById('stokChart').getContext('2d');
+    var stokChart = new Chart(stokCtx, {
+        type: 'bar',
+        data: {
+            labels: {!! json_encode($namaBarang) !!},
+            datasets: [{
+                label: 'Stok Barang',
+                data: {!! json_encode($stokBarang) !!},
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: 'rgb(255, 99, 132)',
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+
 @endsection
